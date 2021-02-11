@@ -4,6 +4,8 @@ import 'package:FileProcess/add.dart';
 import 'package:FileProcess/fileprocess.dart';
 import 'package:flutter/material.dart';
 
+import 'delete.dart';
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
@@ -53,7 +55,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   return InkWell(
                     child: ListTile(
                       title: Text("${dataList[index]['msg']}"),
+                      trailing: Icon(Icons.keyboard_arrow_right),
                     ),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DeleteMessage(
+                                    id: dataList[index]['id'],
+                                  )));
+                    },
                   );
                 });
           } else {

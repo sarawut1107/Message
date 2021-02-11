@@ -5,9 +5,9 @@ import 'package:FileProcess/welcome.dart';
 import 'package:flutter/material.dart';
 
 class DeleteMessage extends StatefulWidget {
-  DeleteMessage({Key key, this.title}) : super(key: key);
+  DeleteMessage({Key key, this.id}) : super(key: key);
 
-  final String title;
+  final String id;
 
   @override
   _DeleteMessageState createState() => _DeleteMessageState();
@@ -42,16 +42,19 @@ class _DeleteMessageState extends State<DeleteMessage> {
     var dataJson_new = jsonEncode(dataList);
     dataFile.writeData(dataJson_new.toString());
 
-    Navigator.push(context, MaterialPageRoute(
-      builder: (context) => MyHomePage(title: 'File Process')));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => MyHomePage(title: 'File Process')));
   }
+
   @override
   Widget build(BuildContext context) {
     TextField _message = TextField(
-     decoration: InputDecoration(hintText: 'Enter message'),
-     onChanged: (value){
-       messageStr = value;
-     },
+      decoration: InputDecoration(hintText: 'Enter message'),
+      onChanged: (value) {
+        messageStr = value;
+      },
     );
 
     RaisedButton _addButton = RaisedButton(
@@ -64,7 +67,7 @@ class _DeleteMessageState extends State<DeleteMessage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add Message"),
+        title: Text("Delete Message"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -73,9 +76,7 @@ class _DeleteMessageState extends State<DeleteMessage> {
             _message,
             ButtonBar(
               alignment: MainAxisAlignment.center,
-              children: <Widget> [
-                _addButton
-              ],
+              children: <Widget>[_addButton],
             ),
           ],
         ),
