@@ -23,12 +23,17 @@ class _DeleteMessageState extends State<DeleteMessage> {
   Future<void> _deleteMessage() async {
     dataList.removeWhere((element) => element['id'] == selectedID.toString());
 
-    // ทำต่อเอง ให้ดูจากตัวอย่างทีให้ไว้
+    var jsondata = jsonEncode(dataList);
+    if (jsondata.length != 0) {
+      dataFile.writeData(jsondata.toString());
+    } else{
+      dataFile.writeData('{}');
+    }
 
-    // Navigator.push(
-    //     context,
-    //     MaterialPageRoute(
-    //         builder: (context) => MyHomePage(title: 'File Process')));
+    Navigator.push(
+     context,
+    MaterialPageRoute(
+    builder: (context) => MyHomePage(title: 'File Process')));
   }
 
   Future<String> _getFile(String id) async {
