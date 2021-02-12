@@ -21,6 +21,7 @@ class _DeleteMessageState extends State<DeleteMessage> {
   TextEditingController _controller;
 
   Future<void> _deleteMessage() async {
+<<<<<<< HEAD
     dataList.removeWhere((element) => element['id'] == selectedID.toString());
 
     // ทำต่อเอง ให้ดูจากตัวอย่างทีให้ไว้
@@ -43,6 +44,21 @@ class _DeleteMessageState extends State<DeleteMessage> {
             'msg': item['msg'],
           };
           dataList.add(dataMap);
+=======
+    DataFileProcess dataFile = DataFileProcess();
+    List<Map> dataList = [];
+    dataList.remove((Element) => Element['id'] == SelectedID.toString());
+
+    String dataStr = await dataFile.readData();
+    var jsondata = jsonEncode(dataList);
+    if (jsondata.length !=0) {
+      dataFile.writeData(jsondata.toString());
+    } else{
+      dataFile.writeData('{}');
+    }
+
+  
+>>>>>>> e806751edab9a72fbe79ea9bb72990c02124d90d
 
           if (item['id'] == id) {
             setState(() {
