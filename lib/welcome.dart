@@ -5,6 +5,8 @@ import 'package:FileProcess/delete.dart';
 import 'package:FileProcess/fileprocess.dart';
 import 'package:flutter/material.dart';
 
+import 'delete.dart';
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 

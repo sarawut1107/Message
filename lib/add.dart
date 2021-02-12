@@ -22,13 +22,15 @@ class _AddMessageState extends State<AddMessage> {
 
     //Exist data
     String dataStr = await dataFile.readData();
-    var dataJson = jsonDecode(dataStr);
-    for (var item in dataJson) {
-      Map<String, dynamic> dataMap = {
-        'id': item['id'],
-        'msg': item['msg'],
-      };
-      dataList.add(dataMap);
+    if (dataStr != 'fail' && dataStr != '{}') {
+      var dataJson = jsonDecode(dataStr);
+      for (var item in dataJson) {
+        Map<String, dynamic> dataMap = {
+          'id': item['id'],
+          'msg': item['msg'],
+        };
+        dataList.add(dataMap);
+      }
     }
 
     //New data
@@ -42,16 +44,19 @@ class _AddMessageState extends State<AddMessage> {
     var dataJson_new = jsonEncode(dataList);
     dataFile.writeData(dataJson_new.toString());
 
-    Navigator.push(context, MaterialPageRoute(
-      builder: (context) => MyHomePage(title: 'File Process')));
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => MyHomePage(title: 'File Process')));
   }
+
   @override
   Widget build(BuildContext context) {
     TextField _message = TextField(
-     decoration: InputDecoration(hintText: 'Enter message'),
-     onChanged: (value){
-       messageStr = value;
-     },
+      decoration: InputDecoration(hintText: 'Enter message'),
+      onChanged: (value) {
+        messageStr = value;
+      },
     );
 
     RaisedButton _addButton = RaisedButton(
@@ -73,9 +78,7 @@ class _AddMessageState extends State<AddMessage> {
             _message,
             ButtonBar(
               alignment: MainAxisAlignment.center,
-              children: <Widget> [
-                _addButton
-              ],
+              children: <Widget>[_addButton],
             ),
           ],
         ),
