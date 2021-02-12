@@ -19,8 +19,8 @@ class _DeleteMessageState extends State<DeleteMessage> {
   Future<void> _deleteMessage() async {
     DataFileProcess dataFile = DataFileProcess();
     List<Map> dataList = [];
-    dataList.remove((Element) => Element['id'] == selectedID.toString());
-    
+    dataList.remove((Element) => Element['id'] );
+
     String dataStr = await dataFile.readData();
     var jsondata = jsonEncode(dataList);
     if (jsondata.length !=0) {
