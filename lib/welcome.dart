@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:FileProcess/add.dart';
+import 'package:FileProcess/delete.dart';
 import 'package:FileProcess/fileprocess.dart';
 import 'package:flutter/material.dart';
 
@@ -15,20 +16,22 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Map> dataList = [];
-  
-  Future<String> _getFile() async{
+
+  Future<String> _getFile() async {
     DataFileProcess dataFile = DataFileProcess();
     String dataStr = await dataFile.readData();
-    var dataJSon;
-    
-    if (dataList.length == 0) {
-      dataJSon = jsonDecode(dataStr);
-      for (var item in dataJSon) {
-        Map<String, dynamic> dataMap = {
-          'id' : item['id'],
-          'msg' : item['msg'],
-        };
-        dataList.add(dataMap);
+    print(dataStr);
+    if (dataStr != 'fail' && dataStr != '{}' && dataList.length == 0) {
+      var dataJSon;
+      if (dataList.length == 0) {
+        dataJSon = jsonDecode(dataStr);
+        for (var item in dataJSon) {
+          Map<String, dynamic> dataMap = {
+            'id': item['id'],
+            'msg': item['msg'],
+          };
+          dataList.add(dataMap);
+        }
       }
     }
 
@@ -44,16 +47,25 @@ class _MyHomePageState extends State<MyHomePage> {
       body: FutureBuilder(
         future: _getFile(),
         builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasData) {  
+          if (snapshot.hasData) {
             return ListView.builder(
-              itemCount: dataList.length,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  child: ListTile(
-                    title: Text("${dataList[index]['msg']}"),
-                  ),
-                );
-              });
+                itemCount: dataList.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    child: ListTile(
+                      title: Text("${dataList[index]['msg']}"),
+                      trailing: Icon(Icons.keyboard_arrow_right),
+                    ),
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => DeleteMessage(
+                                    id: dataList[index]['id'],
+                                  )));
+                    },
+                  );
+                });
           } else {
             return Center(
               child: Column(
@@ -64,14 +76,15 @@ class _MyHomePageState extends State<MyHomePage> {
             );
           }
         },
-        ),
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AddMessage()));
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => AddMessage()));
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
-      ), 
+      ),
     );
   }
 }
