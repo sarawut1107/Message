@@ -19,6 +19,7 @@ class _AddMessageState extends State<AddMessage> {
   Future<void> _addMessage() async {
     DataFileProcess dataFile = DataFileProcess();
     List<Map> dataList = [];
+    int lastID = 0;
 
     //Exist data
     String dataStr = await dataFile.readData();
@@ -30,12 +31,14 @@ class _AddMessageState extends State<AddMessage> {
           'msg': item['msg'],
         };
         dataList.add(dataMap);
+        lastID = int.parse(item['id']);
       }
     }
 
     //New data
+    lastID +=1;
     Map<String, dynamic> dataMap = {
-      'id': '0',
+      'id': lastID.toString(),
       'msg': messageStr,
     };
 
