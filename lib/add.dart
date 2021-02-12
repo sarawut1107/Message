@@ -36,7 +36,11 @@ class _AddMessageState extends State<AddMessage> {
     }
 
     //New data
+<<<<<<< HEAD
     lastID +=1;
+=======
+    lastID += 1;
+>>>>>>> c5bb63054ea9bfd9251087fac555da97fbf23efb
     Map<String, dynamic> dataMap = {
       'id': lastID.toString(),
       'msg': messageStr,
